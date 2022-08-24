@@ -1,8 +1,9 @@
-use crate::actions::Actions;
+use bevy::prelude::{App, Assets, Commands, EventReader, Handle, Plugin, Res, ResMut, SystemSet};
+use bevy_kira_audio::{Audio, AudioControl, AudioInstance, AudioPlugin, AudioTween, PlaybackState};
+
 use crate::loading::AudioAssets;
+use crate::player::PlayerMovement;
 use crate::GameState;
-use bevy::prelude::*;
-use bevy_kira_audio::prelude::*;
 
 pub struct InternalAudioPlugin;
 
@@ -30,19 +31,19 @@ fn start_audio(mut commands: Commands, audio_assets: Res<AudioAssets>, audio: Re
 }
 
 fn control_flying_sound(
-    actions: Res<Actions>,
+    player_walk_events: EventReader<PlayerMovement>,
     audio: Res<FlyingAudio>,
     mut audio_instances: ResMut<Assets<AudioInstance>>,
 ) {
     if let Some(instance) = audio_instances.get_mut(&audio.0) {
         match instance.state() {
             PlaybackState::Paused { .. } => {
-                if actions.player_movement.is_some() {
+                if !player_walk_events.is_empty() {
                     instance.resume(AudioTween::default());
                 }
             }
             PlaybackState::Playing { .. } => {
-                if actions.player_movement.is_none() {
+                if player_walk_events.is_empty() {
                     instance.pause(AudioTween::default());
                 }
             }

@@ -17,7 +17,7 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-bevy = { version = "0.8", features = ["wayland"] }
+bevy = { version = "0.8" }
 bevy_kira_audio = { version = "0.12" }
 bevy_asset_loader = { version = "0.12" }
 rand = { version = "0.8.3" }

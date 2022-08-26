@@ -1,5 +1,5 @@
 [package]
-name = "aquarium"
+name = "bevy_game"
 version = "0.1.0"
 publish = false
 authors = ["Philip Brink"]
@@ -19,9 +19,10 @@ codegen-units = 1
 [dependencies]
 bevy = { version = "0.8" }
 bevy_kira_audio = { version = "0.12" }
-bevy_asset_loader = { version = "0.12" }
+bevy_asset_loader = { version = "0.12", features = ["stageless"] }
 rand = { version = "0.8.3" }
 leafwing-input-manager = "0.5.2"
+iyes_loopless = "0.7.1"
 
 [build-dependencies]
 embed-resource = "1.4"

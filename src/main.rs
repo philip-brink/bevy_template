@@ -4,18 +4,18 @@
 use bevy::prelude::{App, ClearColor, Color, Msaa, WindowDescriptor};
 // use bevy::window::WindowId;
 // use bevy::winit::WinitWindows;
-use aquarium::GamePlugin;
 use bevy::DefaultPlugins;
+use bevy_game::GamePlugin;
 // use std::io::Cursor;
 
 fn main() {
     App::new()
         .insert_resource(Msaa { samples: 1 })
-        .insert_resource(ClearColor(Color::rgb(0.2, 0.2, 0.4)))
+        .insert_resource(ClearColor(Color::rgb(0.2, 0.2, 0.2)))
         .insert_resource(WindowDescriptor {
             width: 800.,
             height: 600.,
-            title: "Aquarium".to_string(),
+            title: "Bevy Game".to_string(),
             canvas: Some("#bevy".to_owned()),
             ..Default::default()
         })

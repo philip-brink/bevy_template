@@ -12,10 +12,10 @@ impl Plugin for LoadingPlugin {
     fn build(&self, app: &mut App) {
         app.add_loading_state(
             LoadingState::new(GameState::LoadingAssets)
+                .continue_to_state(GameState::Menu)
                 .with_collection::<FontAssets>()
                 .with_collection::<AudioAssets>()
-                .with_collection::<TextureAssets>()
-                .continue_to_state(GameState::Menu),
+                .with_collection::<TextureAssets>(),
         );
     }
 }

@@ -33,8 +33,8 @@ pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app.add_loopless_state(GameState::LoadingAssets)
-            .add_plugin(InputManagerPlugin::<Action>::default())
             .add_plugin(LoadingPlugin)
+            .add_plugin(InputManagerPlugin::<Action>::default())
             .add_plugin(MenuPlugin)
             .add_plugin(NewGamePlugin)
             .add_plugin(InternalAudioPlugin)

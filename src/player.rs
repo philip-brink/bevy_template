@@ -8,6 +8,23 @@ use leafwing_input_manager::{
     Actionlike, InputManagerBundle,
 };
 
+pub struct PlayerPlugin;
+
+/// This plugin handles player related stuff like movement
+/// Player logic is only active during the State `GameState::Playing`
+impl Plugin for PlayerPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_event::<PlayerMovement>()
+            .add_plugin(InputManagerPlugin::<PlayerAction>::default())
+            .add_system_set(SystemSet::on_enter(GameState::Playing).with_system(spawn_player))
+            .add_system_set(
+                SystemSet::on_update(GameState::Playing)
+                    .with_system(control_player_movement)
+                    .with_system(move_player),
+            );
+    }
+}
+
 #[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug)]
 enum PlayerAction {
     // Movement
@@ -101,22 +118,6 @@ impl PlayerBundle {
         input_map.insert(GamepadButtonType::LeftTrigger2, Ultimate);
 
         input_map
-    }
-}
-
-pub struct PlayerPlugin;
-/// This plugin handles player related stuff like movement
-/// Player logic is only active during the State `GameState::Playing`
-impl Plugin for PlayerPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_event::<PlayerMovement>()
-            .add_plugin(InputManagerPlugin::<PlayerAction>::default())
-            .add_system_set(SystemSet::on_enter(GameState::Playing).with_system(spawn_player))
-            .add_system_set(
-                SystemSet::on_update(GameState::Playing)
-                    .with_system(control_player_movement)
-                    .with_system(move_player),
-            );
     }
 }
 
